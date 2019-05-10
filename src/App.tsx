@@ -1,24 +1,40 @@
+import { generate as shortid } from "shortid";
 import React, { useState, FormEvent } from "react";
+import { Todo, Todos } from "./types";
 import "./App.css";
-
-type Todo = string;
-type Todos = Todo[];
+import TodoItem from "./TodoItem";
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState([] as Todos);
-  const [todo, setTodo] = useState("" as Todo);
+  const [todos, setTodos] = useState({} as Todos);
+  const [newTodo, setTodo] = useState("");
 
-  const handleNewTodo = (e: FormEvent) => {
+  const handleNewTodo = (e: FormEvent): void => {
     e.preventDefault();
 
-    if (todo.trim().length < 3) {
+    if (newTodo.trim().length < 3) {
       return;
     }
-    const newTodos = [...todos, todo];
 
+    setTodos({ ...todos, ...generateNewTodo(newTodo) });
     setTodo("");
-    setTodos(newTodos);
   };
+
+  const handleTodoCompleteChange = (
+    todoId: string,
+    completed: boolean
+  ): void => {
+    setTodos({
+      ...todos,
+      [todoId]: {
+        ...todos[todoId],
+        completed
+      }
+    });
+  };
+
+  const generateNewTodo = (text: string): Todo => ({
+    [shortid()]: { text }
+  });
 
   return (
     <>
@@ -28,7 +44,7 @@ const App: React.FC = () => {
           type="text"
           name="todo"
           id="todo"
-          value={todo}
+          value={newTodo}
           onChange={e => setTodo(e.target.value)}
         />
         <button type="submit">Add</button>
@@ -37,10 +53,17 @@ const App: React.FC = () => {
       <hr />
 
       <ul className="todo-list">
-        {todos.map((todo, ndx) => (
-          <li key={`todo-${ndx}`}>{todo}</li>
+        {Object.keys(todos).map(todoId => (
+          <TodoItem
+            id={todoId}
+            todo={todos[todoId]}
+            changeCompleted={handleTodoCompleteChange}
+          />
         ))}
       </ul>
+
+      <hr />
+      <pre>{JSON.stringify(todos, null, 2)}</pre>
     </>
   );
 };
