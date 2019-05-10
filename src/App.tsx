@@ -1,41 +1,27 @@
-import { generate as shortid } from "shortid";
 import React, { useState, FormEvent } from "react";
-import { Todo, Todos } from "./types";
-import "normalize.css";
-import "./App.css";
+
+import { addTodo } from "./redux/actions";
+import store from "./redux/store";
+
 import TodoItem from "./TodoItem";
 
-const App: React.FC = () => {
-  const [todos, setTodos] = useState({} as Todos);
-  const [newTodo, setTodo] = useState("");
+import "normalize.css";
+import "./App.css";
 
-  const handleNewTodo = (e: FormEvent): void => {
-    e.preventDefault();
+const App: React.FC = () => {
+  const [newTodo, setTodo] = useState("");
+  const todos = store.getState().Todos;
+
+  const handleNewTodo = (event: FormEvent): void => {
+    event.preventDefault();
 
     if (newTodo.trim().length < 3) {
       return;
     }
 
-    setTodos({ ...todos, ...generateNewTodo(newTodo) });
+    store.dispatch(addTodo(newTodo));
     setTodo("");
   };
-
-  const handleTodoCompleteChange = (
-    todoId: string,
-    completed: boolean
-  ): void => {
-    setTodos({
-      ...todos,
-      [todoId]: {
-        ...todos[todoId],
-        completed
-      }
-    });
-  };
-
-  const generateNewTodo = (text: string): Todo => ({
-    [shortid()]: { text }
-  });
 
   return (
     <>
@@ -46,6 +32,7 @@ const App: React.FC = () => {
           name="todo"
           id="todo"
           value={newTodo}
+          autoComplete="off"
           onChange={e => setTodo(e.target.value)}
         />
         <button type="submit">Add</button>
@@ -55,16 +42,9 @@ const App: React.FC = () => {
 
       <ul className="todo-list">
         {Object.keys(todos).map(todoId => (
-          <TodoItem
-            id={todoId}
-            todo={todos[todoId]}
-            changeCompleted={handleTodoCompleteChange}
-          />
+          <TodoItem id={todoId} todo={todos[todoId]} />
         ))}
       </ul>
-
-      <hr />
-      <pre>{JSON.stringify(todos, null, 2)}</pre>
     </>
   );
 };

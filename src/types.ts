@@ -3,8 +3,6 @@ export interface TodoContent {
   completed?: boolean;
 }
 
-export interface Todos {
-  [id: string]: TodoContent;
-}
+export type Todos = Record<string, TodoContent>;
 
 export interface Todo extends Todos {}
