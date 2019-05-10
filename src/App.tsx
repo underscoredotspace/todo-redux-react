@@ -1,6 +1,7 @@
 import { generate as shortid } from "shortid";
 import React, { useState, FormEvent } from "react";
 import { Todo, Todos } from "./types";
+import "normalize.css";
 import "./App.css";
 import TodoItem from "./TodoItem";
 

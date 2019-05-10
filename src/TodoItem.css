@@ -1,0 +1,15 @@
+.todo-item {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0.25rem 0;
+  align-items: center;
+}
+.todo-item label:hover {
+  background-color: azure;
+  text-shadow: 0 0 5px silver;
+  cursor: pointer;
+}
+
+.todo-item input[type="checkbox"] {
+  margin: 0 0.5rem;
+}

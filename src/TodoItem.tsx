@@ -1,5 +1,6 @@
 import React from "react";
 import { TodoContent } from "./types";
+import "./TodoItem.css";
 interface TodoItemProps {
   id: string;
   todo: TodoContent;
@@ -7,7 +8,7 @@ interface TodoItemProps {
 }
 
 const TodoItem = ({ id, todo, changeCompleted }: TodoItemProps) => (
-  <li key={`todo-${id}`}>
+  <li className="todo-item" key={`todo-${id}`}>
     <input
       type="checkbox"
       name={`todo-${id}`}
