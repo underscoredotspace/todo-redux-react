@@ -1,6 +1,6 @@
 import React from "react"
 
-import { addTodo, toggleComplete } from "./redux/actions"
+import * as todoActions from "./redux/actions"
 import { connect } from "react-redux"
 
 import { Todos } from "./types"
@@ -12,9 +12,10 @@ interface AppProps {
   todos: Todos
   addTodo: any
   toggleComplete: any
+  editTodo: any
 }
 
-const App = ({ todos, addTodo, toggleComplete }: AppProps) => (
+const App = ({ todos, addTodo, toggleComplete, editTodo }: AppProps) => (
   <>
     <TodoAdd addTodo={addTodo} />
 
@@ -23,6 +24,7 @@ const App = ({ todos, addTodo, toggleComplete }: AppProps) => (
         <TodoItem
           todo={{ id, ...todo }}
           toggleComplete={toggleComplete}
+          editTodo={editTodo}
           key={`todo-${id}`}
         />
       ))}
@@ -34,9 +36,7 @@ const mapStateToProps = (state: { todos: Todos }) => ({
   todos: state.todos
 })
 
-const mapDispatchToProps = { addTodo, toggleComplete }
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { ...todoActions }
 )(App)

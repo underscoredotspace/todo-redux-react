@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_COMPLETED } from "./actionTypes"
+import { ADD_TODO, TOGGLE_COMPLETED, EDIT_TODO } from "./actionTypes"
 
 export const addTodo = (text: string) => ({
   type: ADD_TODO,
@@ -8,4 +8,9 @@ export const addTodo = (text: string) => ({
 export const toggleComplete = (id: string) => ({
   type: TOGGLE_COMPLETED,
   payload: id
+})
+
+export const editTodo = (id: string, text: string) => ({
+  type: EDIT_TODO,
+  payload: { id, text }
 })
