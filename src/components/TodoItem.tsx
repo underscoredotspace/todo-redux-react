@@ -7,13 +7,15 @@ interface TodoItemProps {
     text: string
     completed: boolean
   }
-  toggleComplete: (id: string) => void
-  editTodo: (id: string, text: string) => void
+  toggleComplete(id: string): void
+  editTodo(id: string, text: string): void
+  deleteTodo(id: string): void
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({
   todo: { id, text, completed },
   editTodo,
+  deleteTodo,
   toggleComplete
 }) => (
   <li className="todo-item">
@@ -35,6 +37,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
       value={text}
       onChange={e => editTodo(id, e.target.value)}
     />
+    <button onClick={() => deleteTodo(id)}>Delete</button>
   </li>
 )
 

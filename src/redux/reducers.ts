@@ -3,8 +3,9 @@ import { Todos } from "../types"
 import {
   ADD_TODO,
   TOGGLE_COMPLETED,
-  TodoActionTypes,
-  EDIT_TODO
+  EDIT_TODO,
+  DELETE_TODO,
+  TodoActionTypes
 } from "./actionTypes"
 import { combineReducers } from "redux"
 
@@ -17,7 +18,7 @@ const todos = (state: Todos = {}, action: TodoActionTypes): Todos => {
     case ADD_TODO: {
       return {
         ...state,
-        ...generateNewTodo(action.payload) // makes this reducer impure. should be dependency injection?
+        ...generateNewTodo(action.payload)
       }
     }
     case TOGGLE_COMPLETED: {
@@ -44,6 +45,13 @@ const todos = (state: Todos = {}, action: TodoActionTypes): Todos => {
           text
         }
       }
+    }
+
+    case DELETE_TODO: {
+      const id = action.payload
+      const { [id]: _, ...todos } = state
+      debugger
+      return todos
     }
   }
 

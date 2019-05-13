@@ -1,6 +1,7 @@
 export const ADD_TODO = "ADD_TODO"
 export const TOGGLE_COMPLETED = "TOGGLE_COMPLETED"
 export const EDIT_TODO = "EDIT_TODO"
+export const DELETE_TODO = "DELETE_TODO"
 
 interface AddTodoAction {
   type: typeof ADD_TODO
@@ -17,7 +18,13 @@ interface EditTodoAction {
   payload: { id: string; text: string }
 }
 
+interface DeleteTodoAction {
+  type: typeof DELETE_TODO
+  payload: string
+}
+
 export type TodoActionTypes =
   | AddTodoAction
   | ToggleCompleteAction
   | EditTodoAction
+  | DeleteTodoAction

@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react"
 
 interface TodoAddProps {
-  addTodo: (text: string) => void
+  addTodo(text: string): void
 }
 
 const TodoAdd: React.FC<TodoAddProps> = ({ addTodo }) => {

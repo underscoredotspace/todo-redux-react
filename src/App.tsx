@@ -10,12 +10,19 @@ import "./App.css"
 
 interface AppProps {
   todos: Todos
-  addTodo: any
-  toggleComplete: any
-  editTodo: any
+  addTodo(text: string): void
+  toggleComplete(id: string): void
+  editTodo(id: string, text: string): void
+  deleteTodo(id: string): void
 }
 
-const App = ({ todos, addTodo, toggleComplete, editTodo }: AppProps) => (
+const App = ({
+  todos,
+  addTodo,
+  toggleComplete,
+  editTodo,
+  deleteTodo
+}: AppProps) => (
   <>
     <TodoAdd addTodo={addTodo} />
 
@@ -25,6 +32,7 @@ const App = ({ todos, addTodo, toggleComplete, editTodo }: AppProps) => (
           todo={{ id, ...todo }}
           toggleComplete={toggleComplete}
           editTodo={editTodo}
+          deleteTodo={deleteTodo}
           key={`todo-${id}`}
         />
       ))}
