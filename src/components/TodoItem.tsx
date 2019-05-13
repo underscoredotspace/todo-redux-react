@@ -36,6 +36,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
       className="todo-text"
       value={text}
       onChange={e => editTodo(id, e.target.value)}
+      onBlur={e => {
+        if (!e.target.value) {
+          deleteTodo(id)
+        }
+      }}
     />
     <button onClick={() => deleteTodo(id)}>Delete</button>
   </li>

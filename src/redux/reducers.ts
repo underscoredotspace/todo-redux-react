@@ -50,7 +50,6 @@ const todos = (state: Todos = {}, action: TodoActionTypes): Todos => {
     case DELETE_TODO: {
       const id = action.payload
       const { [id]: _, ...todos } = state
-      debugger
       return todos
     }
   }
