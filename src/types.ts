@@ -1,8 +1,10 @@
-export interface TodoContent {
+interface TodoContent {
   text: string;
-  completed?: boolean;
+  completed: boolean;
 }
 
 export type Todos = Record<string, TodoContent>;
 
-export interface Todo extends Todos {}
+export interface Todo extends TodoContent {
+  id: string;
+}

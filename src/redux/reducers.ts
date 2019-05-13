@@ -1,16 +1,13 @@
 import { generate as shortid } from "shortid";
-import { Todo, Todos as TodosType } from "../types";
+import { Todos } from "../types";
 import { ADD_TODO, TOGGLE_COMPLETED, TodoActionTypes } from "./actionTypes";
 import { combineReducers } from "redux";
 
-const generateNewTodo = (text: string): Todo => ({
+const generateNewTodo = (text: string): Todos => ({
   [shortid()]: { text, completed: false }
 });
 
-const todos = (
-  state: TodosType = {} as TodosType,
-  action: TodoActionTypes
-): TodosType => {
+const todos = (state: Todos = {}, action: TodoActionTypes): Todos => {
   switch (action.type) {
     case ADD_TODO:
       return {

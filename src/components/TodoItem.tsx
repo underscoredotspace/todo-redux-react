@@ -1,23 +1,28 @@
 import React from "react";
-import { TodoContent } from "../types";
 import "./TodoItem.css";
 
 interface TodoItemProps {
-  id: string;
-  todo: TodoContent;
-  toggleComplete: () => void;
+  todo: {
+    id: string;
+    text: string;
+    completed: boolean;
+  };
+  toggleComplete: (id: string) => void;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ id, todo, toggleComplete }) => (
+const TodoItem: React.FC<TodoItemProps> = ({
+  todo: { id, text, completed },
+  toggleComplete
+}) => (
   <li className="todo-item">
     <input
       type="checkbox"
       name={`todo-${id}`}
       id={`todo-${id}`}
-      checked={todo.completed}
-      onChange={_ => toggleComplete()}
+      checked={completed}
+      onChange={() => toggleComplete(id)}
     />
-    <label htmlFor={`todo-${id}`}>{todo.text}</label>
+    <label htmlFor={`todo-${id}`}>{text}</label>
   </li>
 );
 

@@ -1,10 +1,11 @@
-import React, { useState, FormEvent } from "react";
+import React from "react";
 
 import { addTodo, toggleComplete } from "./redux/actions";
 import { connect } from "react-redux";
 
 import { Todos } from "./types";
 import TodoItem from "./components/TodoItem";
+import TodoAdd from "./components/TodoAdd";
 
 import "normalize.css";
 import "./App.css";
@@ -16,42 +17,15 @@ interface AppProps {
 }
 
 const App = ({ todos, addTodo, toggleComplete }: AppProps) => {
-  const [newTodo, setTodo] = useState("");
-
-  const handleNewTodo = (event: FormEvent): void => {
-    event.preventDefault();
-
-    if (newTodo.trim().length < 3) {
-      return;
-    }
-
-    addTodo(newTodo);
-    setTodo("");
-  };
-
   return (
     <>
-      <form className="todo-add" onSubmit={handleNewTodo}>
-        <label htmlFor="todo">Todo: </label>
-        <input
-          type="text"
-          name="todo"
-          id="todo"
-          value={newTodo}
-          autoComplete="off"
-          onChange={e => setTodo(e.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
-
-      <hr />
+      <TodoAdd addTodo={addTodo} />
 
       <ul className="todo-list">
-        {Object.keys(todos).map(id => (
+        {Object.entries(todos).map(([id, todo]) => (
           <TodoItem
-            id={id}
-            todo={todos[id]}
-            toggleComplete={() => toggleComplete(id)}
+            todo={{ id, ...todo }}
+            toggleComplete={toggleComplete}
             key={`todo-${id}`}
           />
         ))}
