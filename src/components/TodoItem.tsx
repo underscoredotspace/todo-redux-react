@@ -1,13 +1,13 @@
-import React from "react";
-import "./TodoItem.css";
+import React from "react"
+import "./TodoItem.css"
 
 interface TodoItemProps {
   todo: {
-    id: string;
-    text: string;
-    completed: boolean;
-  };
-  toggleComplete: (id: string) => void;
+    id: string
+    text: string
+    completed: boolean
+  }
+  toggleComplete: (id: string) => void
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({
@@ -24,6 +24,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
     />
     <label htmlFor={`todo-${id}`}>{text}</label>
   </li>
-);
+)
 
-export default TodoItem;
+export default TodoItem

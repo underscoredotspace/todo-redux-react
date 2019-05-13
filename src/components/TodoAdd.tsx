@@ -1,22 +1,22 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react"
 
 interface TodoAddProps {
-  addTodo: (text: string) => void;
+  addTodo: (text: string) => void
 }
 
 const TodoAdd: React.FC<TodoAddProps> = ({ addTodo }) => {
-  const [newTodo, setTodo] = useState("");
+  const [newTodo, setTodo] = useState("")
 
   const handleNewTodo = (event: FormEvent): void => {
-    event.preventDefault();
+    event.preventDefault()
 
     if (newTodo.trim().length < 3) {
-      return;
+      return
     }
 
-    addTodo(newTodo);
-    setTodo("");
-  };
+    addTodo(newTodo)
+    setTodo("")
+  }
 
   return (
     <form className="todo-add" onSubmit={handleNewTodo}>
@@ -31,7 +31,7 @@ const TodoAdd: React.FC<TodoAddProps> = ({ addTodo }) => {
       />
       <button type="submit">Add</button>
     </form>
-  );
-};
+  )
+}
 
-export default TodoAdd;
+export default TodoAdd
