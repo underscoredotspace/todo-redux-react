@@ -1,16 +1,22 @@
 import React, { useState, FormEvent } from "react";
 
 import { addTodo } from "./redux/actions";
-import store from "./redux/store";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
 
+import { Todos } from "./types";
 import TodoItem from "./TodoItem";
 
 import "normalize.css";
 import "./App.css";
 
-const App: React.FC = () => {
+interface AppProps {
+  todos: Todos;
+  dispatch: Dispatch;
+}
+
+const App = ({ todos, dispatch }: AppProps) => {
   const [newTodo, setTodo] = useState("");
-  const todos = store.getState().Todos;
 
   const handleNewTodo = (event: FormEvent): void => {
     event.preventDefault();
@@ -19,7 +25,7 @@ const App: React.FC = () => {
       return;
     }
 
-    store.dispatch(addTodo(newTodo));
+    dispatch(addTodo(newTodo));
     setTodo("");
   };
 
@@ -42,11 +48,15 @@ const App: React.FC = () => {
 
       <ul className="todo-list">
         {Object.keys(todos).map(todoId => (
-          <TodoItem id={todoId} todo={todos[todoId]} />
+          <TodoItem id={todoId} todo={todos[todoId]} key={`todo-${todoId}`} />
         ))}
       </ul>
     </>
   );
 };
 
-export default App;
+const mapStateToProps = ({ todos }: { todos: Todos }) => ({
+  todos
+});
+
+export default connect(mapStateToProps)(App);
