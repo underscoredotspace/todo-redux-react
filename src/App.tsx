@@ -1,21 +1,21 @@
 import React, { useState, FormEvent } from "react";
 
-import { addTodo } from "./redux/actions";
-import { Dispatch } from "redux";
+import { addTodo, toggleComplete } from "./redux/actions";
 import { connect } from "react-redux";
 
 import { Todos } from "./types";
-import TodoItem from "./TodoItem";
+import TodoItem from "./components/TodoItem";
 
 import "normalize.css";
 import "./App.css";
 
 interface AppProps {
   todos: Todos;
-  dispatch: Dispatch;
+  addTodo: any;
+  toggleComplete: any;
 }
 
-const App = ({ todos, dispatch }: AppProps) => {
+const App = ({ todos, addTodo, toggleComplete }: AppProps) => {
   const [newTodo, setTodo] = useState("");
 
   const handleNewTodo = (event: FormEvent): void => {
@@ -25,7 +25,7 @@ const App = ({ todos, dispatch }: AppProps) => {
       return;
     }
 
-    dispatch(addTodo(newTodo));
+    addTodo(newTodo);
     setTodo("");
   };
 
@@ -47,16 +47,26 @@ const App = ({ todos, dispatch }: AppProps) => {
       <hr />
 
       <ul className="todo-list">
-        {Object.keys(todos).map(todoId => (
-          <TodoItem id={todoId} todo={todos[todoId]} key={`todo-${todoId}`} />
+        {Object.keys(todos).map(id => (
+          <TodoItem
+            id={id}
+            todo={todos[id]}
+            toggleComplete={() => toggleComplete(id)}
+            key={`todo-${id}`}
+          />
         ))}
       </ul>
     </>
   );
 };
 
-const mapStateToProps = ({ todos }: { todos: Todos }) => ({
-  todos
+const mapStateToProps = (state: { todos: Todos }) => ({
+  todos: state.todos
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = { addTodo, toggleComplete };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

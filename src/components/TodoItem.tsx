@@ -1,22 +1,21 @@
 import React from "react";
-import { toggleComplete } from "./redux/actions";
-import store from "./redux/store";
-
-import { TodoContent } from "./types";
+import { TodoContent } from "../types";
 import "./TodoItem.css";
+
 interface TodoItemProps {
   id: string;
   todo: TodoContent;
+  toggleComplete: () => void;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ id, todo }) => (
+const TodoItem: React.FC<TodoItemProps> = ({ id, todo, toggleComplete }) => (
   <li className="todo-item">
     <input
       type="checkbox"
       name={`todo-${id}`}
       id={`todo-${id}`}
       checked={todo.completed}
-      onChange={e => store.dispatch(toggleComplete(id))}
+      onChange={_ => toggleComplete()}
     />
     <label htmlFor={`todo-${id}`}>{todo.text}</label>
   </li>
