@@ -19,29 +19,28 @@ const TodoItem: React.FC<TodoItemProps> = ({
   toggleComplete
 }) => (
   <li className="todo-item">
-    <input
-      type="checkbox"
-      name={`todo-${id}`}
-      id={`todo-${id}`}
-      checked={completed}
-      onChange={() => toggleComplete(id)}
-    />
-    <label htmlFor={`todo-${id}`} hidden>
-      {text}
+    <label htmlFor={`todo-${id}`}>
+      <input
+        type="checkbox"
+        name={`todo-${id}`}
+        id={`todo-${id}`}
+        checked={completed}
+        onChange={() => toggleComplete(id)}
+      />
+      <input
+        type="text"
+        name="text"
+        id={`todo-text-${id}`}
+        className="todo-text"
+        value={text}
+        onChange={e => editTodo(id, e.target.value)}
+        onBlur={e => {
+          if (!e.target.value) {
+            deleteTodo(id)
+          }
+        }}
+      />
     </label>
-    <input
-      type="text"
-      name="text"
-      id={`todo-text-${id}`}
-      className="todo-text"
-      value={text}
-      onChange={e => editTodo(id, e.target.value)}
-      onBlur={e => {
-        if (!e.target.value) {
-          deleteTodo(id)
-        }
-      }}
-    />
     <button onClick={() => deleteTodo(id)}>Delete</button>
   </li>
 )
